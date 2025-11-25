@@ -1,0 +1,50 @@
+import math
+
+def guess_the_number_game():
+    print("Ласкаво просимо до гри 'Вгадай число'!")
+    print("Загадайте ціле додатне число на інтервалі від 1 до N.")
+
+    while True:
+        try:
+            n = int(input("Введіть верхню межу N для інтервалу: "))
+            if n <= 0:
+                print("N повинно бути додатним числом.")
+            else:
+                break
+        except ValueError:
+            print("Будь ласка, введіть дійсне ціле число.")
+
+    print(f"Добре, загадайте число від 1 до {n}. Я спробую його вгадати.")
+    print("Відповідайте 'більше', 'менше' або 'правильно'.")
+
+    low = 1
+    high = n
+    attempts = 0
+    found = False
+
+    while not found:
+        attempts += 1
+        
+        if low > high:
+            print("Здається, ви дали суперечливі відповіді. Гра закінчується.")
+            break
+
+        guess = math.floor((low + high) / 2)
+        print(f"Комп'ютер вгадує: Це число {guess}?")
+        
+        user_feedback = input("Ваша відповідь (більше/менше/правильно): ").lower()
+
+        if user_feedback == 'правильно' or user_feedback == 'p':
+            print(f"Ура! Комп'ютер вгадав ваше число {guess} за {attempts} ходів!")
+            found = True
+        elif user_feedback == 'більше' or user_feedback == 'б':
+            low = guess + 1
+            print("Добре, шукаємо далі в більшому діапазоні.")
+        elif user_feedback == 'менше' or user_feedback == 'м':
+            high = guess - 1
+            print("Добре, шукаємо далі в меншому діапазоні.")
+        else:
+            print("Неправильний ввід. Будь ласка, використовуйте 'більше', 'менше' або 'правильно'.")
+
+# Запуск гри
+guess_the_number_game()
