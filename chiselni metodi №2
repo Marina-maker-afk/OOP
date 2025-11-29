@@ -1,0 +1,21 @@
+def f(x):
+    return x**3 - x - 3
+
+def bisection(a, b, tol=1e-6, max_iter=100):
+    if f(a) * f(b) >= 0:
+        print("Метод бісекції не застосовний: f(a) та f(b) мають однаковий знак.")
+        return None
+
+    for i in range(max_iter):
+        c = (a + b) / 2  
+        if f(c) == 0 or (b - a) / 2 < tol:
+            return c
+        if f(a) * f(c) < 0:
+            b = c
+        else:
+            a = c
+    return (a + b) / 2
+
+
+root = bisection(1, 2) [1,2], бо f(1) = -3, f(2) = 3
+print("Наближений корінь:", root)
