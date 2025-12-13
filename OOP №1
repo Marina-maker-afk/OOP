@@ -1,0 +1,73 @@
+class Hero:
+    def __init__(self, name, health, attack_power, defense):
+        self.name = name  
+        self.health = health  
+        self.attack_power = attack_power  
+        self.defense = defense  
+        print(f"Герой {self.name} створений з {self.health} здоров'я, {self.attack_power} атаки та {self.defense} захисту.")
+
+    def __calculate_damage(self, attacker_attack_power, target_defense): 
+        damage = max(1, attacker_attack_power - target_defense)
+        print(f"[Приватний розрахунок] Розраховано урон: {damage}.")
+        return damage
+
+    def attack(self, target):
+        if not self.is_alive():
+            print(f"{self.name} не може атакувати, бо він неживий.")
+            return
+        if not isinstance(target, Hero):
+            print(f"[Помилка] {target} не є героєм.")
+            return
+        if not target.is_alive():
+            print(f"{self.name} не може атакувати {target.name}, бо він вже неживий.")
+            return
+
+        print(f"{self.name} атакує {target.name}!")
+        actual_damage = self.__calculate_damage(self.attack_power, target.defense)
+        target.take_damage(actual_damage)
+        print(f"\n{self.name} наніс {actual_damage} урону {target.name}.")
+
+    def take_damage(self, amount):
+        if not self.is_alive():
+            print(f"{self.name} вже неживий і не може отримати більше урону.")
+            return
+
+        self.health -= amount
+        print(f"{self.name} отримав {amount} урону. Залишилось {self.health} здоров'я.")
+        if not self.is_alive():
+            print(f"{self.name} загинув...")
+
+    def is_alive(self):
+        return self.health > 0
+
+    def get_stats(self):
+        status = "живий" if self.is_alive() else "неживий"
+        print(f"\n--- Статистика {self.name} ---")
+        print(f"Здоров'я: {self.health}")
+        print(f"Атака: {self.attack_power}")
+        print(f"Захист: {self.defense}")
+        print(f"Статус: {status}")
+        print(f"--------------------------")
+
+
+hero1 = Hero("Орк", 100, 15, 5)
+hero2 = Hero("Воїн", 80, 12, 3)
+
+hero1.get_stats()
+hero2.get_stats()
+
+hero1.attack(hero2)
+hero2.get_stats()
+
+hero2.attack(hero1)
+hero1.get_stats()
+
+
+hero1.attack(hero2)
+hero1.attack(hero2)
+hero1.attack(hero2)
+hero1.attack(hero2)
+hero2.get_stats()
+
+
+hero1.attack(hero2)
