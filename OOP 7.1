@@ -1,0 +1,16 @@
+def calc(items, tax):
+    total = 0
+    for i in items:
+        total += i
+    if tax:
+        total = total * 1.2
+    return total
+
+def calc_with_discount(items, tax, discount):
+    total = 0
+    for i in items:
+        total += i
+    if tax:
+        total = total * 1.2
+    total = total * (1 - discount)
+    return total
