@@ -1,0 +1,26 @@
+class BankAccount:
+    def __init__(self, owner, balance=0):
+        self.owner = owner
+        self.balance = balance
+        self.history = []
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            self.history.append(f"Поповнення: +{amount}")
+            return True
+        return False
+
+    def withdraw(self, amount):
+        if 0 < amount <= self.balance:
+            self.balance -= amount
+            self.history.append(f"Зняття: -{amount}")
+            return True
+        return False
+
+    def show_history(self):
+        for record in self.history:
+            print(record)
+
+    def show_info(self):
+        print(f"Власник: {self.owner}, Баланс: {self.balance}")
