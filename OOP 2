@@ -1,0 +1,135 @@
+class Hero:
+    def __init__(self, name, health, attack_power, defense):
+        self.__name = None
+        self.__health = None
+        self.__attack_power = None
+        self.__defense = None
+
+        self.__max_health = health  
+
+        self.name = name
+        self.health = health
+        self.attack_power = attack_power
+        self.defense = defense
+
+        print(f"Герой {self.__name} створений з {self.__health} здоров'я, {self.__attack_power} атаки та {self.__defense} захисту.")
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        if not value.strip():
+            print("[Помилка] Ім'я не може бути порожнім.")
+        else:
+            self.__name = value
+
+    @property
+    def health(self):
+        return self.__health
+
+    @health.setter
+    def health(self, value):
+        if value < 0:
+            print("[Помилка] Здоров'я не може бути від'ємним.")
+        elif value > self.__max_health:
+            print("[Помилка] Здоров'я не може перевищувати максимальне.")
+        else:
+            self.__health = value
+
+    @property
+    def attack_power(self):
+        return self.__attack_power
+
+    @attack_power.setter
+    def attack_power(self, value):
+        if value <= 0:
+            print("[Помилка] Сила атаки має бути додатною (> 0).")
+        else:
+            self.__attack_power = value
+
+    @property
+    def defense(self):
+        return self.__defense
+
+    @defense.setter
+    def defense(self, value):
+        if value < 0:
+            print("[Помилка] Захист не може бути від'ємним.")
+        else:
+            self.__defense = value
+
+    @property
+    def max_health(self):
+        return self.__max_health
+
+    @property
+    def is_alive(self):
+        return self.__health > 0
+
+    @property
+    def health_percentage(self):
+        return (self.__health / self.__max_health) * 100 if self.__max_health > 0 else 0
+
+    def __calculate_damage(self, attacker_attack_power, target_defense): 
+        damage = max(1, attacker_attack_power - target_defense)
+        print(f"[Приватний розрахунок] Розраховано урон: {damage}.")
+        return damage
+
+    def attack(self, target):
+        if not self.is_alive:
+            print(f"{self.__name} не може атакувати, бо він неживий.")
+            return
+        if not isinstance(target, Hero):
+            print(f"[Помилка] {target} не є героєм.")
+            return
+        if not target.is_alive:
+            print(f"{self.__name} не може атакувати {target.name}, бо він вже неживий.")
+            return
+
+        print(f"{self.__name} атакує {target.name}!")
+        actual_damage = self.__calculate_damage(self.__attack_power, target.defense)
+        target.take_damage(actual_damage)
+        print(f"\n{self.__name} наніс {actual_damage} урону {target.name}.")
+
+    def take_damage(self, amount):
+        if not self.is_alive:
+            print(f"{self.__name} вже неживий і не може отримати більше урону.")
+            return
+
+        self.health = self.__health - amount
+        print(f"{self.__name} отримав {amount} урону. Залишилось {self.__health} здоров'я.")
+        if not self.is_alive:
+            print(f"{self.__name} загинув...")
+
+    def get_stats(self):
+        status = "живий" if self.is_alive else "неживий"
+        print(f"\n--- Статистика {self.__name} ---")
+        print(f"Здоров'я: {self.__health}/{self.__max_health} ({self.health_percentage:.2f}%)")
+        print(f"Атака: {self.__attack_power}")
+        print(f"Захист: {self.__defense}")
+        print(f"Статус: {status}")
+        print(f"--------------------------")
+
+
+
+hero1 = Hero("Орк", 100, 15, 5)
+hero2 = Hero("Воїн", 80, 12, 3)
+
+hero1.get_stats()
+hero2.get_stats()
+
+hero1.attack(hero2)
+hero2.get_stats()
+
+hero2.attack(hero1)
+hero1.get_stats()
+
+hero1.attack(hero2)
+hero1.attack(hero2)
+hero1.attack(hero2)
+hero1.attack(hero2)
+hero2.get_stats()
+
+hero1.attack(hero2)
