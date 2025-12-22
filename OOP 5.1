@@ -1,0 +1,38 @@
+class HumanWarrior(Hero, Human, Warrior, FireMixin):
+    def __init__(self, name):
+        Human.__init__(self)
+        Warrior.__init__(self)
+        FireMixin.__init__(self)
+        Hero.__init__(self, name)
+
+
+class ElfMage(Hero, Elf, Mage, IceMixin):
+    def __init__(self, name):
+        Elf.__init__(self)
+        Mage.__init__(self)
+        IceMixin.__init__(self)
+        Hero.__init__(self, name)
+
+
+class DwarfWarrior(Hero, Dwarf, Warrior, LightningMixin):
+    def __init__(self, name):
+        Dwarf.__init__(self)
+        Warrior.__init__(self)
+        LightningMixin.__init__(self)
+        Hero.__init__(self, name)
+
+
+class HumanRanger(Hero, Human, Ranger, FireMixin):
+    def __init__(self, name):
+        Human.__init__(self)
+        Ranger.__init__(self)
+        FireMixin.__init__(self)
+        Hero.__init__(self, name)
+
+
+class ElfRanger(Hero, Elf, Ranger, LightningMixin):
+    def __init__(self, name):
+        Elf.__init__(self)
+        Ranger.__init__(self)
+        LightningMixin.__init__(self)
+        Hero.__init__(self, name)
