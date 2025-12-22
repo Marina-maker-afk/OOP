@@ -1,0 +1,62 @@
+class NotificationSender(ABC):
+    @abstractmethod
+    def connect(self) -> bool:
+        """Підключитися до сервісу"""
+        pass
+
+    @abstractmethod
+    def send(self, recipient: str, message: str) -> bool:
+        """Надіслати повідомлення"""
+        pass
+
+    @abstractmethod
+    def disconnect(self) -> None:
+        """Відключитися від сервісу"""
+        pass
+
+class EmailSender(NotificationSender):
+    def connect(self) -> bool:
+        print("Підключення до Email сервісу...")
+        return True
+
+    def send(self, recipient: str, message: str) -> bool:
+        print(f"Надсилаю Email до {recipient}: {message}")
+        return True
+
+    def disconnect(self) -> None:
+        print("Відключення від Email сервісу.")
+
+
+class SMSSender(NotificationSender):
+    def connect(self) -> bool:
+        print("Підключення до SMS сервісу...")
+        return True
+
+    def send(self, recipient: str, message: str) -> bool:
+        print(f"Надсилаю SMS до {recipient}: {message}")
+        return True
+
+    def disconnect(self) -> None:
+        print("Відключення від SMS сервісу.")
+
+
+class TelegramSender(NotificationSender):
+    def connect(self) -> bool:
+        print("Підключення до Telegram сервісу...")
+        return True
+
+    def send(self, recipient: str, message: str) -> bool:
+        print(f"Надсилаю повідомлення в Telegram до {recipient}: {message}")
+        return True
+
+    def disconnect(self) -> None:
+        print("Відключення від Telegram сервісу.")
+
+
+def notify_customer(sender: NotificationSender, recipient: str, message: str):
+    """Надіслати сповіщення клієнту через будь-який канал"""
+    if sender.connect():
+        success = sender.send(recipient, message)
+        sender.disconnect()
+        return success
+    return False
